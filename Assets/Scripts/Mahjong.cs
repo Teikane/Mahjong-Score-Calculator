@@ -13,27 +13,100 @@ public enum SuitEnum
 }
 public enum ValueEnum { One, Two, Three, Four, Five, Six, Seven, Eight, Nine, East, South, West, North, White, Green, Red };
 
+public class Tiles
+{
+    private SuitEnum suit;
+    public SuitEnum Suit
+    { get; set; }
+
+    private ValueEnum value;
+    public ValueEnum Value
+    { get; set; }
+
+    public Tiles(SuitEnum s, ValueEnum v)
+    {
+        Suit = s;
+        Value = v;
+    }
+
+    private bool red_five;
+    public bool Red_five
+    { get; set; }
+
+    private bool face_up = false;
+    public bool Face_up
+    { get; set; }
+}
+
+public class Wall<T>
+{
+    private List<T> wall_of_tiles;
+    public List<T> Wall_of_tiles
+    { get; set; }
+
+    private List<T> discard;
+    public List<T> Discard
+    { get; set; }
+
+    public Wall(List<T> tiles)
+    {
+        this.wall_of_tiles = tiles;
+        discard = new List<T>();
+    }
+
+    // Draw method
+    // Takes in amount of tiles to draw, default 1
+    // Returns a List<T> 
+    public List<T> Draw( int numberToDraw = 1)
+    {
+        if (numberToDraw > wall_of_tiles.Count)
+            numberToDraw = wall_of_tiles.Count;
+        List<T> drawn_tiles = new List<T>();
+        for (int i = 0; i < numberToDraw; ++i)
+        {
+            drawn_tiles.Add(wall_of_tiles[0]);
+            wall_of_tiles.RemoveAt(0);
+        }
+        return drawn_tiles;
+    }
+}
+
 public class Mahjong : MonoBehaviour
 {
     public GameObject tilePrefab;
+    public GameObject wallButton;
 
-    public List<Tiles> wall;
+
+    Wall<Tiles> wall;
+   
 
     // Start is called before the first frame update
     void Start()
     {
-        createWall();
+        game_start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public static List<Tiles> createWall()
+    public void game_start()
     {
-        print("Hello this is a wall");
+        create_wall();
+
+        //print sample of wall
+        List<Tiles> temp = wall.Draw(20);
+        foreach (Tiles t in temp)
+        { 
+            string msg = String.Format("suit {0} value {1}\n", t.Suit, t.Value);
+            print(msg);
+        }
+    }
+
+    void create_wall()
+    {
         List<Tiles> newWall = new List<Tiles>();
 
         //for man pin and sou
@@ -41,51 +114,31 @@ public class Mahjong : MonoBehaviour
         {
             //create tiles for each value
             for (ValueEnum v = ValueEnum.One; v <= ValueEnum.Nine; v++)
-            {
-                //string msg = String.Format("suit {0} value {1}", s, v);
-                //print(msg);
-                Tiles t = new Tiles();
-                t.Suit = s;
-                t.Value = v;
-
+            {   
                 //add tile to the wall four times
-                newWall.Add(t);
-                newWall.Add(t);
-                newWall.Add(t);
-                newWall.Add(t);
+                newWall.Add(new Tiles(s, v));
+                newWall.Add(new Tiles(s, v));
+                newWall.Add(new Tiles(s, v));
+                newWall.Add(new Tiles(s, v));
             }
         }
 
-        // winds
+        // Create 4 of each winds
         for (ValueEnum v = ValueEnum.East; v <= ValueEnum.North; v++)
         {
-            Tiles t = new Tiles();
-            t.Suit = SuitEnum.Wind;
-            t.Value = v;
-
-            newWall.Add(t);
-            newWall.Add(t);
-            newWall.Add(t);
-            newWall.Add(t);
+            newWall.Add(new Tiles(SuitEnum.Wind, v));
+            newWall.Add(new Tiles(SuitEnum.Wind, v));
+            newWall.Add(new Tiles(SuitEnum.Wind, v));
+            newWall.Add(new Tiles(SuitEnum.Wind, v));
         }
-        // dragons
+        // Create 4 of each dragons
         for (ValueEnum v = ValueEnum.White; v <= ValueEnum.Red; v++)
         {
-            Tiles t = new Tiles();
-            t.Suit = SuitEnum.Dragon;
-            t.Value = v;
-
-            newWall.Add(t);
-            newWall.Add(t);
-            newWall.Add(t);
-            newWall.Add(t);
+            newWall.Add(new Tiles(SuitEnum.Dragon, v));
+            newWall.Add(new Tiles(SuitEnum.Dragon, v));
+            newWall.Add(new Tiles(SuitEnum.Dragon, v));
+            newWall.Add(new Tiles(SuitEnum.Dragon, v));
         }
-
-        foreach (Tiles t in newWall)
-        {
-            string msg = String.Format("suit {0} value {1}", t.Suit, t.Value);
-            print(msg);
-        }
-        return newWall;
+        wall = new Wall<Tiles>(newWall);
     }
 }
