@@ -11,47 +11,47 @@ public enum SuitEnum
     Wind,
     Dragon
 }
-public enum ValueEnum { One, Two, Three, Four, Five, Six, Seven, Eight, Nine, East, South, West, North, White, Green, Red };
+public enum ValueEnum { One, Two, Three, Four, Five, Six, Seven, Eight, Nine, East, South, West, North, Red, White, Green };
 
 public class Tiles
 {
-    private SuitEnum suit;
-    public SuitEnum Suit
+    private SuitEnum _suit;
+    public SuitEnum suit
     { get; set; }
 
-    private ValueEnum value;
-    public ValueEnum Value
+    private ValueEnum _value;
+    public ValueEnum value
     { get; set; }
 
     public Tiles(SuitEnum s, ValueEnum v)
     {
-        Suit = s;
-        Value = v;
+        suit = s;
+        value = v;
     }
 
-    private bool red_five;
-    public bool Red_five
+    private bool _red_five;
+    public bool red_five
     { get; set; }
 
-    private bool face_up = false;
-    public bool Face_up
+    private bool _face_up = false;
+    public bool face_up
     { get; set; }
 }
 
-public class Wall<T>
+    public class Wall<T>
 {
-    private List<T> wall_of_tiles;
-    public List<T> Wall_of_tiles
+    private List<T> _wall_of_tiles;
+    public List<T> wall_of_tiles
     { get; set; }
 
-    private List<T> discard;
-    public List<T> Discard
+    private List<T> _discard;
+    public List<T> discard
     { get; set; }
 
     public Wall(List<T> tiles)
     {
         this.wall_of_tiles = tiles;
-        discard = new List<T>();
+       discard = new List<T>();
     }
 
     // Draw method
@@ -73,12 +73,16 @@ public class Wall<T>
 
 public class Mahjong : MonoBehaviour
 {
+    public Sprite[] tileFaces;
     public GameObject tilePrefab;
     public GameObject wallButton;
 
 
-    Wall<Tiles> wall;
-   
+    private Wall<Tiles> _wall;
+    public Wall<Tiles> wall
+    { get; set; }
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -94,18 +98,21 @@ public class Mahjong : MonoBehaviour
 
     public void game_start()
     {
-        create_wall();
+        wall = new Wall<Tiles>( create_wall());
+
 
         //print sample of wall
-        List<Tiles> temp = wall.Draw(20);
+        /*
+        List<Tiles> temp = wall.Draw(14);
         foreach (Tiles t in temp)
         { 
             string msg = String.Format("suit {0} value {1}\n", t.Suit, t.Value);
             print(msg);
         }
+        */
     }
 
-    void create_wall()
+    public static List<Tiles> create_wall()
     {
         List<Tiles> newWall = new List<Tiles>();
 
@@ -139,6 +146,7 @@ public class Mahjong : MonoBehaviour
             newWall.Add(new Tiles(SuitEnum.Dragon, v));
             newWall.Add(new Tiles(SuitEnum.Dragon, v));
         }
-        wall = new Wall<Tiles>(newWall);
+        return newWall;
     }
+    
 }
