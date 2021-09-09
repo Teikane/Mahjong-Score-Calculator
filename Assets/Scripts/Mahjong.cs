@@ -110,6 +110,44 @@ public class Mahjong : MonoBehaviour
             print(msg);
         }
         */
+
+       Arrange_tiles();
+
+    }
+
+    // create new tile object
+    void Arrange_tiles()
+    {
+        float xOffset = 0;
+        float yOffset = 0; 
+        float zOffset = 0;
+
+        int i = 0;
+        int j = 0;
+        foreach ( Tiles t in wall.wall_of_tiles)
+        {
+            // Instantiate the param1: object to create, param2: the position, param3: oreintation
+            GameObject newTile = Instantiate(tilePrefab, new Vector3(tilePrefab.transform.position.x + xOffset, tilePrefab.transform.position.y - yOffset, tilePrefab.transform.position.z - zOffset), Quaternion.identity);
+            
+            // name the new game object with Suit and value example: Man 1
+            newTile.name = t.suit.ToString() + t.value.ToString();
+            print(newTile.name);
+
+
+            //stack every 4 of kind
+            i++;
+            if ((i % 4) == 0)
+            {
+                xOffset += 2.5f;
+                j++;
+                // create a new row for every 9 new kind of tile
+                if ((j % 9) == 0)
+                {
+                    xOffset = 0;
+                    yOffset += 2.5f;
+                }
+            }
+        }
     }
 
     public static List<Tiles> create_wall()
@@ -139,7 +177,7 @@ public class Mahjong : MonoBehaviour
             newWall.Add(new Tiles(SuitEnum.Wind, v));
         }
         // Create 4 of each dragons
-        for (ValueEnum v = ValueEnum.White; v <= ValueEnum.Red; v++)
+        for (ValueEnum v = ValueEnum.Red; v <= ValueEnum.Green; v++)
         {
             newWall.Add(new Tiles(SuitEnum.Dragon, v));
             newWall.Add(new Tiles(SuitEnum.Dragon, v));

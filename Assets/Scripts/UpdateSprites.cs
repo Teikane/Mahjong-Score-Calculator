@@ -14,20 +14,23 @@ public class UpdateSprites : MonoBehaviour
     void Start()
     {
         //get the mahjong object
-        Wall<Tiles> new_wall = new Wall<Tiles>(Mahjong.create_wall());
         mahjong = FindObjectOfType<Mahjong>();
 
-        
         int i = 0;
-        foreach (Tiles t in new_wall.wall_of_tiles)
+        int j = 0;
+        foreach (Tiles t in mahjong.wall.wall_of_tiles)
         {
+            print(this.name);
             string t_val = t.suit.ToString() + t.value.ToString();
             if (this.name == t_val)
             {
                 tileFace = mahjong.tileFaces[i];
-                break;
             }
-            i++;
+            j++;
+            if ((j % 4) == 0)
+            {
+                i++;
+            }
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
