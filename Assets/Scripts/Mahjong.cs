@@ -13,32 +13,21 @@ public enum SuitEnum
 }
 public enum ValueEnum { One, Two, Three, Four, Five, Six, Seven, Eight, Nine, East, South, West, North, Red, White, Green };
 
-public class Tiles
+public class TileModel
 {
-    private SuitEnum _suit;
-    public SuitEnum suit
-    { get; set; }
+    public SuitEnum suit;
+    public ValueEnum value;
+    public bool red_five = false;
+    public bool face_up = true;
 
-    private ValueEnum _value;
-    public ValueEnum value
-    { get; set; }
-
-    public Tiles(SuitEnum s, ValueEnum v)
+    public TileModel(SuitEnum s, ValueEnum v)
     {
         suit = s;
         value = v;
     }
-
-    private bool _red_five;
-    public bool red_five
-    { get; set; }
-
-    private bool _face_up = false;
-    public bool face_up
-    { get; set; }
 }
 
-    public class Wall<T>
+public class Wall<T>
 {
     private List<T> _wall_of_tiles;
     public List<T> wall_of_tiles
@@ -76,13 +65,9 @@ public class Mahjong : MonoBehaviour
     public Sprite[] tileFaces;
     public GameObject tilePrefab;
     public GameObject wallButton;
+    public GameObject screen;
 
-
-    private Wall<Tiles> _wall;
-    public Wall<Tiles> wall
-    { get; set; }
-    
-
+    public Wall<TileModel> wall;    
 
     // Start is called before the first frame update
     void Start()
@@ -98,7 +83,7 @@ public class Mahjong : MonoBehaviour
 
     public void game_start()
     {
-        wall = new Wall<Tiles>( create_wall());
+        wall = new Wall<TileModel>( create_wall());
 
 
         //print sample of wall
@@ -124,15 +109,13 @@ public class Mahjong : MonoBehaviour
 
         int i = 0;
         int j = 0;
-        foreach ( Tiles t in wall.wall_of_tiles)
+        foreach ( TileModel t in wall.wall_of_tiles)
         {
             // Instantiate the param1: object to create, param2: the position, param3: oreintation
-            GameObject newTile = Instantiate(tilePrefab, new Vector3(tilePrefab.transform.position.x + xOffset, tilePrefab.transform.position.y - yOffset, tilePrefab.transform.position.z - zOffset), Quaternion.identity);
+            GameObject newTile = Instantiate(tilePrefab, new Vector3(wallButton.transform.position.x + xOffset, wallButton.transform.position.y - yOffset, wallButton.transform.position.z - zOffset), Quaternion.identity,screen.transform);
             
             // name the new game object with Suit and value example: Man 1
             newTile.name = t.suit.ToString() + t.value.ToString();
-            print(newTile.name);
-
 
             //stack every 4 of kind
             i++;
@@ -150,9 +133,9 @@ public class Mahjong : MonoBehaviour
         }
     }
 
-    public static List<Tiles> create_wall()
+    public static List<TileModel> create_wall()
     {
-        List<Tiles> newWall = new List<Tiles>();
+        List<TileModel> newWall = new List<TileModel>();
 
         //for man pin and sou
         for (SuitEnum s = SuitEnum.Man; s <= SuitEnum.Sou; s++ )
@@ -161,28 +144,28 @@ public class Mahjong : MonoBehaviour
             for (ValueEnum v = ValueEnum.One; v <= ValueEnum.Nine; v++)
             {   
                 //add tile to the wall four times
-                newWall.Add(new Tiles(s, v));
-                newWall.Add(new Tiles(s, v));
-                newWall.Add(new Tiles(s, v));
-                newWall.Add(new Tiles(s, v));
+                newWall.Add(new TileModel(s, v));
+                newWall.Add(new TileModel(s, v));
+                newWall.Add(new TileModel(s, v));
+                newWall.Add(new TileModel(s, v));
             }
         }
 
         // Create 4 of each winds
         for (ValueEnum v = ValueEnum.East; v <= ValueEnum.North; v++)
         {
-            newWall.Add(new Tiles(SuitEnum.Wind, v));
-            newWall.Add(new Tiles(SuitEnum.Wind, v));
-            newWall.Add(new Tiles(SuitEnum.Wind, v));
-            newWall.Add(new Tiles(SuitEnum.Wind, v));
+            newWall.Add(new TileModel(SuitEnum.Wind, v));
+            newWall.Add(new TileModel(SuitEnum.Wind, v));
+            newWall.Add(new TileModel(SuitEnum.Wind, v));
+            newWall.Add(new TileModel(SuitEnum.Wind, v));
         }
         // Create 4 of each dragons
         for (ValueEnum v = ValueEnum.Red; v <= ValueEnum.Green; v++)
         {
-            newWall.Add(new Tiles(SuitEnum.Dragon, v));
-            newWall.Add(new Tiles(SuitEnum.Dragon, v));
-            newWall.Add(new Tiles(SuitEnum.Dragon, v));
-            newWall.Add(new Tiles(SuitEnum.Dragon, v));
+            newWall.Add(new TileModel(SuitEnum.Dragon, v));
+            newWall.Add(new TileModel(SuitEnum.Dragon, v));
+            newWall.Add(new TileModel(SuitEnum.Dragon, v));
+            newWall.Add(new TileModel(SuitEnum.Dragon, v));
         }
         return newWall;
     }

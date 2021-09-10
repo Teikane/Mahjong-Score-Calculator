@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdateSprites : MonoBehaviour
+public class TileViewer : MonoBehaviour
 {
     public Sprite tileFace;
     public Sprite tileBack;
 
     private SpriteRenderer spriteRenderer;
     private Mahjong mahjong;
+
+    private bool faceup=false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +20,13 @@ public class UpdateSprites : MonoBehaviour
 
         int i = 0;
         int j = 0;
-        foreach (Tiles t in mahjong.wall.wall_of_tiles)
+        foreach (TileModel t in mahjong.wall.wall_of_tiles)
         {
-            print(this.name);
             string t_val = t.suit.ToString() + t.value.ToString();
             if (this.name == t_val)
             {
                 tileFace = mahjong.tileFaces[i];
+                this.faceup = t.face_up;
             }
             j++;
             if ((j % 4) == 0)
@@ -38,7 +40,7 @@ public class UpdateSprites : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (true)
+        if (faceup==true)
         {
             spriteRenderer.sprite = tileFace;
         }
