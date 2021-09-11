@@ -3,50 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(BoxCollider2D))]
+
+
 public class TileDraggable : MonoBehaviour
 {
-    private float startPosX;
-    private float startPosY;
-    private bool isBeingHeld = false;
+    // Find any object with BoxCollider has been clicked
+    GameObject ReturnClickedObject()
+    {
+        GameObject target = null;
+        Ray ray = main_cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
 
-    //Camera main_cam;
+        //check if a collider was hit and return object
+        if (hit.collider != null)
+        {
+            target = hit.collider.gameObject;
+        }
+        return target;
+    }
 
-    Collider2D collider;
-    // Start is called before the first frame update
+    GameObject target;
+    Camera main_cam;
+
+    Vector3 screenPosition;
+    Vector3 offset;
+    bool isMouseDrag = false;
+
     void Start()
     {
-        //main_cam = Camera.main;
+        main_cam = Camera.main;
+        Debug.Log("Tile Draggable Start");
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if(isBeingHeld == true)
-        {
-            Vector3 mousePos;
-            mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-            this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
-        }
-    }
-    private void OnMouseDown()
-    {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mousePos;
-            mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-            startPosX = mousePos.x - this.transform.localPosition.x;
-            startPosY = mousePos.y - this.transform.localPosition.y;
-
-            isBeingHeld = true;
+            target = ReturnClickedObject();
+            if (target != null)
+            {
+                isMouseDrag = true;
+                Debug.Log("target position :" + target.transform.position);
+                //Convert world position to screen position.
+                screenPosition = main_cam.WorldToScreenPoint(target.transform.position);
+                offset = target.transform.position - main_cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPosition.z));
+            }
         }
-    }
-    private void OnMouseUp()
-    {
-        isBeingHeld = false;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            isMouseDrag = false;
+        }
+
+        if (isMouseDrag)
+        {
+            //track mouse position.
+            Vector3 currentScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPosition.z);
+
+            //convert screen position to world position with offset changes.
+            Vector3 currentPosition = main_cam.ScreenToWorldPoint(currentScreenSpace) + offset;
+
+            //It will update target gameobject's current postion.
+            target.transform.position = currentPosition;
+        }
+
     }
 }
 

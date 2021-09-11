@@ -65,7 +65,7 @@ public class Mahjong : MonoBehaviour
     public Sprite[] tileFaces;
     public GameObject tilePrefab;
     public GameObject wallButton;
-    public GameObject screen;
+    public GameObject panel;
 
     public Wall<TileModel> wall;    
 
@@ -112,22 +112,24 @@ public class Mahjong : MonoBehaviour
         foreach ( TileModel t in wall.wall_of_tiles)
         {
             // Instantiate the param1: object to create, param2: the position, param3: oreintation
-            GameObject newTile = Instantiate(tilePrefab, new Vector3(wallButton.transform.position.x + xOffset, wallButton.transform.position.y - yOffset, wallButton.transform.position.z - zOffset), Quaternion.identity,screen.transform);
+            GameObject newTile = Instantiate(tilePrefab, new Vector3(wallButton.transform.position.x + xOffset, wallButton.transform.position.y - yOffset, wallButton.transform.position.z - zOffset), Quaternion.identity, panel.transform);
             
             // name the new game object with Suit and value example: Man 1
             newTile.name = t.suit.ToString() + t.value.ToString();
+
+            //TODO make a snappable grid with smae stackable tiles. Similar to drag dropable inventory
 
             //stack every 4 of kind
             i++;
             if ((i % 4) == 0)
             {
-                xOffset += 2.5f;
+                xOffset += 20f;
                 j++;
                 // create a new row for every 9 new kind of tile
-                if ((j % 9) == 0)
+                if ((j % 18) == 0)
                 {
                     xOffset = 0;
-                    yOffset += 2.5f;
+                    yOffset += 30f;
                 }
             }
         }
