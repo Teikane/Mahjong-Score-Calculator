@@ -3,71 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D))]
-
-
-public class TileDraggable : MonoBehaviour
+public class TileDraggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
-    // Find any object with BoxCollider has been clicked
-    GameObject ReturnClickedObject()
-    {
-        GameObject target = null;
-        Ray ray = main_cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+    [SerializeField] private Canvas canvas;
 
-        //check if a collider was hit and return object
-        if (hit.collider != null)
-        {
-            target = hit.collider.gameObject;
-        }
-        return target;
+    private RectTransform rectTransform;
+    private CanvasGroup canvasGroup;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        canvas = this.GetComponentInParent<Canvas>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    GameObject target;
-    Camera main_cam;
-
-    Vector3 screenPosition;
-    Vector3 offset;
-    bool isMouseDrag = false;
-
-    void Start()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        main_cam = Camera.main;
-        Debug.Log("Tile Draggable Start");
+        Debug.Log("OnBeginDrag");
+        canvasGroup.blocksRaycasts = false;
     }
-    void Update()
+
+    public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("OnDrag");
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+    }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            target = ReturnClickedObject();
-            if (target != null)
-            {
-                isMouseDrag = true;
-                Debug.Log("target position :" + target.transform.position);
-                //Convert world position to screen position.
-                screenPosition = main_cam.WorldToScreenPoint(target.transform.position);
-                offset = target.transform.position - main_cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPosition.z));
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            isMouseDrag = false;
-        }
-
-        if (isMouseDrag)
-        {
-            //track mouse position.
-            Vector3 currentScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPosition.z);
-
-            //convert screen position to world position with offset changes.
-            Vector3 currentPosition = main_cam.ScreenToWorldPoint(currentScreenSpace) + offset;
-
-            //It will update target gameobject's current postion.
-            target.transform.position = currentPosition;
-        }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnEndDrag");
 
     }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        canvasGroup.blocksRaycasts = true;
+    }
+
 }
-

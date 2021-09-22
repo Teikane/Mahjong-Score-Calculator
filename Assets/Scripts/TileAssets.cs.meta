@@ -1,0 +1,48 @@
+fileFormatVersion: 2
+guid: 3f662c36aaed2e44a971de361a313bee
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ManOne: {fileID: -3918077283257505104, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManTwo: {fileID: -8897078023700354814, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManThree: {fileID: -657049672167974891, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManFour: {fileID: -8151648849185981795, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManFive: {fileID: 6406770983106186637, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManFiveRed: {fileID: -1738494503280803490, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManSix: {fileID: -4903704609866198002, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManSeven: {fileID: -5309385110100584502, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManEight: {fileID: -7971134744118819639, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - ManNine: {fileID: 4136924281863534533, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinOne: {fileID: -4920123652439933489, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinTwo: {fileID: 1499759466918283319, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinThree: {fileID: -6790156653458611422, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinFour: {fileID: -2638957895252785164, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinFive: {fileID: -4721212710411176555, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinFiveRed: {fileID: -5511107896344060239, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinSix: {fileID: 4392299390562045670, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinSeven: {fileID: 5073437035632945969, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinEight: {fileID: 6038748382377449254, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - PinNine: {fileID: 4225561399298529172, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouOne: {fileID: 7036594390790800305, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouTwo: {fileID: -3011982123068855276, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouThree: {fileID: -7295387169337936897, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouFour: {fileID: -9098924242093967470, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouFive: {fileID: -6745798389646174103, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouFiveRed: {fileID: -1973626796865901319, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouSix: {fileID: 814797685671428682, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouSeven: {fileID: -6663704131104391790, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouEight: {fileID: -2330144320632239152, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - SouNine: {fileID: 4338067249943133799, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - WindEast: {fileID: 6008029579790685219, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - WindSouth: {fileID: -3191805666724367898, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - WindWest: {fileID: -1582338447241234482, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - WindNorth: {fileID: 3418468217067843948, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - DragonRed: {fileID: -2868811539860649223, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - DragonWhite: {fileID: 1467749687959512744, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  - DragonGreen: {fileID: 836361062561333485, guid: cde5dab7901c7d342902a19ef7ba4ba6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

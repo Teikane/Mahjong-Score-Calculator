@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public enum SuitEnum
 {
@@ -11,12 +13,13 @@ public enum SuitEnum
     Wind,
     Dragon
 }
-public enum ValueEnum { One, Two, Three, Four, Five, Six, Seven, Eight, Nine, East, South, West, North, Red, White, Green };
+public enum ValueEnum { One = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, East, South, West, North, Red, White, Green };
 
 public class TileModel
 {
     public SuitEnum suit;
     public ValueEnum value;
+    public string tileName;
     public bool red_five = false;
     public bool face_up = true;
 
@@ -24,6 +27,53 @@ public class TileModel
     {
         suit = s;
         value = v;
+        tileName = s.ToString() + v.ToString();
+    }
+
+    public Sprite GetSprite()
+    {
+        if (face_up)
+        {
+            switch (tileName)
+            {
+                default:
+                case "ManOne": return TileAssets.Instance.manOneSprite;
+                case "ManTwo": return TileAssets.Instance.manTwoSprite;
+                case "ManThree": return TileAssets.Instance.manThreeSprite;
+                case "ManFour": return TileAssets.Instance.manFourSprite;
+                case "ManFive": return TileAssets.Instance.manFiveSprite;
+                case "ManSix": return TileAssets.Instance.manSixSprite;
+                case "ManSeven": return TileAssets.Instance.manSevenSprite;
+                case "ManEight": return TileAssets.Instance.manEightSprite;
+                case "ManNine": return TileAssets.Instance.manNineSprite;
+                case "PinOne": return TileAssets.Instance.pinOneSprite;
+                case "PinTwo": return TileAssets.Instance.pinTwoSprite;
+                case "PinThree": return TileAssets.Instance.pinThreeSprite;
+                case "PinFour": return TileAssets.Instance.pinFourSprite;
+                case "PinFive": return TileAssets.Instance.pinFiveSprite;
+                case "PinSix": return TileAssets.Instance.pinSixSprite;
+                case "PinSeven": return TileAssets.Instance.pinSevenSprite;
+                case "PinEight": return TileAssets.Instance.pinEightSprite;
+                case "PinNine": return TileAssets.Instance.pinNineSprite;
+                case "SouOne": return TileAssets.Instance.souOneSprite;
+                case "SouTwo": return TileAssets.Instance.souTwoSprite;
+                case "SouThree": return TileAssets.Instance.souThreeSprite;
+                case "SouFour": return TileAssets.Instance.souFourSprite;
+                case "SouFive": return TileAssets.Instance.souFiveSprite;
+                case "SouSix": return TileAssets.Instance.souSixSprite;
+                case "SouSeven": return TileAssets.Instance.souSevenSprite;
+                case "SouEight": return TileAssets.Instance.souEightSprite;
+                case "SouNine": return TileAssets.Instance.souNineSprite;
+                case "WindEast": return TileAssets.Instance.windEastSprite;
+                case "WindSouth": return TileAssets.Instance.windSouthSprite;
+                case "WindWest": return TileAssets.Instance.windWestSprite;
+                case "WindNorth": return TileAssets.Instance.windNorthSprite;
+                case "DragonRed": return TileAssets.Instance.dragonRedSprite;
+                case "DragonWhite": return TileAssets.Instance.dragonWhiteSprite;
+                case "DragonGreen": return TileAssets.Instance.dragonGreenSprite;
+            }
+        }
+        else { return TileAssets.Instance.tileBackSprite; }
     }
 }
 
@@ -113,9 +163,13 @@ public class Mahjong : MonoBehaviour
         {
             // Instantiate the param1: object to create, param2: the position, param3: oreintation
             GameObject newTile = Instantiate(tilePrefab, new Vector3(wallButton.transform.position.x + xOffset, wallButton.transform.position.y - yOffset, wallButton.transform.position.z - zOffset), Quaternion.identity, panel.transform);
-            
+
             // name the new game object with Suit and value example: Man 1
-            newTile.name = t.suit.ToString() + t.value.ToString();
+            newTile.name = t.tileName;
+
+            // Set image
+            Image image = newTile.GetComponent<Image>();
+            image.sprite = t.GetSprite();
 
             //TODO make a snappable grid with smae stackable tiles. Similar to drag dropable inventory
 
