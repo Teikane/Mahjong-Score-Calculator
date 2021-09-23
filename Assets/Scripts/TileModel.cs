@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class TileViewer : MonoBehaviour
+public class TileModel
 {
     public SuitEnum suit;
     public ValueEnum value;
@@ -11,6 +10,12 @@ public class TileViewer : MonoBehaviour
     public bool redFive = false;
     public bool faceUp = true;
 
+    public TileModel(SuitEnum s, ValueEnum v)
+    {
+        suit = s;
+        value = v;
+        tileName = s.ToString() + v.ToString();
+    }
     public Sprite GetSprite()
     {
         if (faceUp)

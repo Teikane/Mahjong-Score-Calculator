@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TileDraggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public class TileDraggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private Canvas canvas;
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+
 
     private void Awake()
     {
@@ -25,18 +26,14 @@ public class TileDraggable : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("OnDrag");
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        Debug.Log("OnDrag" +"\nmoust pos:"+ eventData.position);
+        Debug.Log("\nobject pos:" + this.transform.position);
+        rectTransform.anchoredPosition += eventData.delta;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.Log("OnEndDrag");
-
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
         canvasGroup.blocksRaycasts = true;
     }
 
